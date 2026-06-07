@@ -7,4 +7,101 @@ function addMessage(text,type){const div=document.createElement('div');div.class
 const skillTabs=document.querySelectorAll('.skill-tab');const skillButtons=document.querySelectorAll('.skill-cloud button');skillTabs.forEach(tab=>tab.addEventListener('click',()=>{const filter=tab.dataset.filter;skillTabs.forEach(t=>t.classList.remove('active'));tab.classList.add('active');skillButtons.forEach(btn=>{const match=filter==='all'||btn.dataset.group===filter;btn.classList.toggle('highlight',match&&filter!=='all');btn.classList.toggle('dim',!match&&filter!=='all');});}));
 
 
-const projectSlides=[...document.querySelectorAll('.project-slide')];const projectDotsContainer=document.querySelector('.project-dots');let projectIndex=0;if(projectSlides.length&&projectDotsContainer){projectSlides.forEach((_,i)=>{const b=document.createElement('button');b.className='project-dot'+(i===0?' active':'');b.setAttribute('aria-label',`Show project ${i+1}`);b.addEventListener('click',()=>showProject(i));projectDotsContainer.appendChild(b);});const projectDots=[...document.querySelectorAll('.project-dot')];function showProject(i){projectIndex=(i+projectSlides.length)%projectSlides.length;projectSlides.forEach((s,idx)=>s.classList.toggle('active',idx===projectIndex));projectDots.forEach((d,idx)=>d.classList.toggle('active',idx===projectIndex));}document.querySelector('.project-next')?.addEventListener('click',()=>showProject(projectIndex+1));document.querySelector('.project-prev')?.addEventListener('click',()=>showProject(projectIndex-1));}
+const portfolioProjects=[
+  {
+    title:'AuditIQ Enterprise',
+    category:'Governance • Audit • AI',
+    subtitle:'AI-powered audit intelligence platform',
+    image:'assets/project-auditiq.svg',
+    description:'Transforms cloud security, governance and compliance findings into risk-scored dashboards, executive reports, data quality checks and audit-ready remediation insights.',
+    tech:['Python','Streamlit','Pandas','Plotly','Risk Scoring','Audit Automation'],
+    links:[
+      ['Live Demo','https://auditiq-ai-audit-intelligence.streamlit.app/','live'],
+      ['View Code','https://github.com/pallavikwatra1502/auditiq-ai-audit-intelligence','code']
+    ]
+  },
+  {
+    title:'CostIQ',
+    category:'GCP • FinOps • Optimisation',
+    subtitle:'GCP cloud cost intelligence platform',
+    image:'assets/project-costiq.svg',
+    description:'Analyses GCP spend, BigQuery utilisation, Dataflow jobs and budget risk to detect anomalies, forecast overspend and generate optimisation recommendations.',
+    tech:['Python','Streamlit','GCP','BigQuery','Dataflow','FinOps'],
+    links:[
+      ['Live Demo','https://costiq-gcp-cost-intelligence.streamlit.app/','live'],
+      ['View Code','https://github.com/pallavikwatra1502/costiq-gcp-cost-intelligence','code']
+    ]
+  },
+  {
+    title:'DataPulse Enterprise',
+    category:'DataOps • Reliability • Lineage',
+    subtitle:'Real-time data engineering command center',
+    image:'assets/project-datapulse.svg',
+    description:'Monitors pipeline SLAs, data quality, lineage, incident impact and root-cause analysis across critical enterprise data products with a reliability copilot.',
+    tech:['Python','Gradio','Hugging Face','Pandas','Plotly','NetworkX'],
+    links:[
+      ['Live Demo','https://huggingface.co/spaces/pallavikwatra/DataPulse-Enterprise','live'],
+      ['View Space','https://huggingface.co/spaces/pallavikwatra/DataPulse-Enterprise/tree/main','code']
+    ]
+  },
+  {
+    title:'Akamai WAF Security Analytics',
+    category:'Security • WAF • Threat Detection',
+    subtitle:'Enterprise security analytics platform for Akamai WAF logs',
+    image:'assets/project-akamai.svg',
+    description:'Processes synthetic Akamai WAF logs, validates schema, detects high-risk threats, scores attacks and generates dashboard-ready threat reports with production-style GCP architecture.',
+    tech:['Python','BigQuery','Pub/Sub','Airflow','Terraform','Security Analytics'],
+    links:[
+      ['View Code','https://github.com/pallavikwatra1502/akamai-waf-security-analytics-platform','live']
+    ]
+  },
+  {
+    title:'Palantir Project Walkthrough',
+    category:'Data Platform • Demo • Video',
+    subtitle:'Project explanation and technical walkthrough',
+    image:'assets/project-palantir.svg',
+    description:'Video walkthrough explaining the project approach, implementation flow and platform thinking. Added as a media project because no public GitHub repository is currently available.',
+    tech:['Palantir','Data Platform','Analytics','Project Walkthrough'],
+    links:[
+      ['Watch Video','https://www.youtube.com/watch?v=WtnSH4of45o','video']
+    ]
+  },
+  {
+    title:'Flutter Mobile App Prototype',
+    category:'Mobile • Flutter • Dart',
+    subtitle:'Cross-platform mobile application prototype',
+    image:'assets/project-flutter.svg',
+    description:'Flutter mobile application repository showing cross-platform app structure across Android and iOS. This is included as an older mobile development project.',
+    tech:['Flutter','Dart','Android','iOS'],
+    links:[
+      ['View Code','https://github.com/pallavikwatra1502/flutter','code']
+    ]
+  }
+];
+
+let currentProject=0;
+const projectImage=document.getElementById('projectImage');
+const projectCategory=document.getElementById('projectCategory');
+const projectTitle=document.getElementById('projectTitle');
+const projectSubtitle=document.getElementById('projectSubtitle');
+const projectDescription=document.getElementById('projectDescription');
+const projectTech=document.getElementById('projectTech');
+const projectLinks=document.getElementById('projectLinks');
+const projectDots=document.getElementById('projectDots');
+function renderProject(index){
+  if(!projectImage)return;
+  const p=portfolioProjects[index];
+  projectImage.src=p.image;
+  projectImage.alt=`${p.title} project preview`;
+  projectCategory.textContent=p.category;
+  projectTitle.textContent=p.title;
+  projectSubtitle.textContent=p.subtitle;
+  projectDescription.textContent=p.description;
+  projectTech.innerHTML=p.tech.map(t=>`<span>${t}</span>`).join('');
+  projectLinks.innerHTML=p.links.map(([label,url,type])=>`<a class="${type}" href="${url}" target="_blank" rel="noopener">${label} →</a>`).join('');
+  projectDots.innerHTML=portfolioProjects.map((_,i)=>`<button class="${i===index?'active':''}" aria-label="View project ${i+1}"></button>`).join('');
+  [...projectDots.children].forEach((dot,i)=>dot.addEventListener('click',()=>{currentProject=i;renderProject(currentProject)}));
+}
+document.querySelector('.project-next')?.addEventListener('click',()=>{currentProject=(currentProject+1)%portfolioProjects.length;renderProject(currentProject)});
+document.querySelector('.project-prev')?.addEventListener('click',()=>{currentProject=(currentProject-1+portfolioProjects.length)%portfolioProjects.length;renderProject(currentProject)});
+renderProject(currentProject);
