@@ -49,3 +49,17 @@
 .current-work-card p{margin:0!important;color:#d8e7f7!important;font-size:17px!important;font-weight:700!important;line-height:1.55!important}
 .about-profile p:first-of-type{font-size:19px!important;color:#e0ecf8!important;font-weight:700!important}
 .cert-pro .issuer{color:var(--brand)!important}
+
+
+/* Final requested corrections - hero status + experience timeline */
+.hero-status-lines{display:grid!important;gap:12px!important;margin-top:30px!important;color:var(--muted)!important;font-size:15px!important}
+.hero-status-lines p{margin:0!important;display:flex!important;align-items:flex-start!important;gap:10px!important;line-height:1.55!important}
+.hero-status-lines span{flex:0 0 auto!important;margin-top:.55em!important;width:10px!important;height:10px!important;border-radius:50%!important;background:var(--brand)!important;box-shadow:0 0 18px var(--brand)!important}
+.hero-identity .currently-line{display:none!important}
+.currently-line,.current-work-card{display:none!important}
+.timeline{position:relative!important;display:grid!important;gap:26px!important;padding-left:72px!important}
+.timeline:before{content:""!important;position:absolute!important;left:27px!important;top:18px!important;bottom:18px!important;width:3px!important;border-radius:999px!important;background:linear-gradient(180deg,#b98cff,#6f59ff)!important;box-shadow:0 0 26px rgba(151,113,255,.45)!important}
+.timeline .role{position:relative!important}
+.timeline .role:before{content:""!important;position:absolute!important;left:-61px!important;top:34px!important;width:22px!important;height:22px!important;border-radius:999px!important;background:#9b6cff!important;border:12px solid rgba(155,108,255,.20)!important;box-shadow:0 0 28px rgba(155,108,255,.55)!important}
+.timeline .role-head h3{color:#b98cff!important}
+@media(max-width:980px){.timeline{padding-left:48px!important}.timeline:before{left:18px!important}.timeline .role:before{left:-42px!important}}
